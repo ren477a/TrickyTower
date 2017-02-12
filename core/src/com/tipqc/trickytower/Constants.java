@@ -7,6 +7,10 @@ import com.badlogic.gdx.graphics.Color;
  */
 
 public class Constants {
-    public static Color BACKGROUND_COLOR = Color.BLUE;
-    public static float WORLD_SIZE = 10.0f;
+    public static final int WIDTH = 480;
+    public static final int HEIGHT = 800;
+    public static final String TITLE = "Tricky Towers";
+
+    public static final Color BACKGROUND_COLOR = Color.BLUE;
+    public static final float WORLD_SIZE = 10.0f;
 }
