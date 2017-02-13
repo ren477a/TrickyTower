@@ -9,6 +9,13 @@ import com.badlogic.gdx.graphics.GL20;
  */
 
 public class GameScreen implements Screen {
+
+    private TrickyTowerGame game;
+
+    public GameScreen(TrickyTowerGame game) {
+        this.game = game;
+    }
+
     @Override
     public void show() {
 
