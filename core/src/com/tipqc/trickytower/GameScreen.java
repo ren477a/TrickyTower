@@ -6,6 +6,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
+import com.badlogic.gdx.graphics.Texture;
 
 /**
  * Created by REN on 2/12/2017.
@@ -17,8 +18,10 @@ public class GameScreen implements Screen {
 
     private TrickyTowerGame game;
     private Viewport view;
-    private Player player;
     private SpriteBatch sb;
+    private Texture background;
+    private Player player;
+    private Walls walls;
 
     public GameScreen(TrickyTowerGame game) {
         this.game = game;
@@ -26,7 +29,9 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        background = new Texture("bg.png");
         player = new Player(0, 100);
+        walls = new Walls();
         view = new FitViewport(Constants.WIDTH, Constants.HEIGHT);
         sb = new SpriteBatch();
     }
@@ -34,12 +39,15 @@ public class GameScreen implements Screen {
     @Override
     public void render(float delta) {
         player.update(delta);
+        walls.update();
         Gdx.gl.glClearColor(Constants.BACKGROUND_COLOR.r, Constants.BACKGROUND_COLOR.g, Constants.BACKGROUND_COLOR.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         view.apply(true);
         sb.setProjectionMatrix(view.getCamera().combined);
 
         sb.begin();
+        sb.draw(background, 0, 0);
+        walls.render(sb);
         player.render(sb);
         sb.end();
 
