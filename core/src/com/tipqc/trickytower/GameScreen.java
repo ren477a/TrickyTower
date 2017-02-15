@@ -77,6 +77,7 @@ public class GameScreen implements Screen {
     public void dispose() {
         player.dispose();
         walls.dispose();
+        background.dispose();
         sb.dispose();
     }
 }

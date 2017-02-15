@@ -62,6 +62,7 @@ public class MenuScreen implements Screen {
     @Override
     public void dispose() {
         sb.dispose();
+        background.dispose();
         System.out.println("Menu screen disposed");
 
     }
