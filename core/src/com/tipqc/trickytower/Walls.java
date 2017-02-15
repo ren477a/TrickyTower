@@ -33,6 +33,6 @@ public class Walls {
     }
 
     public void dispose() {
-
+        texture.dispose();
     }
 }
