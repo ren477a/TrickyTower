@@ -20,4 +20,6 @@ public class Constants {
     public static final float JUMP_VELOCITY = 400;
     public static final float LEFT_BOUNDARY = 25;
     public static final float RIGHT_BOUNDARY = 455;
+
+    public static final float PLATFORM_HEIGHT = 20;
 }

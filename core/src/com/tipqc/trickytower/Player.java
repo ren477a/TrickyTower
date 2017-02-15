@@ -44,8 +44,8 @@ public class Player {
         position.add(0, velocity.y);
 
         //stop falling on floor
-        if(position.y < 0) {
-            position.y = 0;
+        if(position.y < Constants.PLATFORM_HEIGHT) {
+            position.y = Constants.PLATFORM_HEIGHT;
             jumpState = JumpState.GROUNDED;
         }
 

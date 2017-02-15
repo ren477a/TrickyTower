@@ -14,10 +14,10 @@ public class Walls {
 
     public Walls() {
         texture = new Texture("wall.png");
-        leftWall1 = new Vector2(-texture.getWidth()/2-25, 0);
-        leftWall2 = new Vector2(-texture.getWidth()/2-25, Constants.HEIGHT);
-        rightWall1 = new Vector2(Constants.WIDTH - texture.getWidth()/2 + 25, 0);
-        rightWall2 = new Vector2(Constants.WIDTH - texture.getWidth()/2 + 25, Constants.HEIGHT);
+        leftWall1 = new Vector2(-3*texture.getWidth()/4, 0);
+        leftWall2 = new Vector2(-3*texture.getWidth()/4, Constants.HEIGHT);
+        rightWall1 = new Vector2(Constants.WIDTH - texture.getWidth()/4, 0);
+        rightWall2 = new Vector2(Constants.WIDTH - texture.getWidth()/4, Constants.HEIGHT);
 
     }
 

@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.Texture;
@@ -19,9 +20,11 @@ public class GameScreen implements Screen {
     private TrickyTowerGame game;
     private Viewport view;
     private SpriteBatch sb;
+    private ShapeRenderer sr;
     private Texture background;
     private Player player;
     private Walls walls;
+    private Platforms platforms;
 
     public GameScreen(TrickyTowerGame game) {
         this.game = game;
@@ -29,11 +32,13 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
-        background = new Texture("bg.png");
-        player = new Player(0, 100);
-        walls = new Walls();
         view = new FitViewport(Constants.WIDTH, Constants.HEIGHT);
         sb = new SpriteBatch();
+        sr = new ShapeRenderer();
+        background = new Texture("bg.png");
+        player = new Player(Constants.WIDTH/2, 100);
+        walls = new Walls();
+        platforms = new Platforms();
     }
 
     @Override
@@ -50,6 +55,11 @@ public class GameScreen implements Screen {
         walls.render(sb);
         player.render(sb);
         sb.end();
+
+        sr.setProjectionMatrix(view.getCamera().combined);
+        sr.begin(ShapeRenderer.ShapeType.Filled);
+        platforms.render(sr);
+        sr.end();
 
     }
 
@@ -77,7 +87,9 @@ public class GameScreen implements Screen {
     public void dispose() {
         player.dispose();
         walls.dispose();
+        platforms.dispose();
         background.dispose();
         sb.dispose();
+
     }
 }
