@@ -13,4 +13,8 @@ public class Constants {
 
     public static final Color BACKGROUND_COLOR = Color.BLUE;
     public static final float WORLD_SIZE = 10.0f;
+
+
+    public static final float GRAVITY = -15;
+    public static final float PLAYER_MOVEMENT_SPEED = 7.0f;
 }
