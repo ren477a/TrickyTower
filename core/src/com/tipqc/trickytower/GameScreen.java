@@ -3,6 +3,7 @@ package com.tipqc.trickytower;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.viewport.FitViewport;
@@ -25,6 +26,8 @@ public class GameScreen implements Screen {
     private Player player;
     private Walls walls;
     private Platforms platforms;
+    private GameCam cam;
+    //TODO: Make a game camera
 
     public GameScreen(TrickyTowerGame game) {
         this.game = game;
@@ -37,6 +40,7 @@ public class GameScreen implements Screen {
         sr = new ShapeRenderer();
         background = new Texture("bg.png");
         player = new Player(Constants.WIDTH/2, 100);
+        cam = new GameCam(view.getCamera(), player);
         walls = new Walls();
         platforms = new Platforms();
     }
@@ -45,11 +49,12 @@ public class GameScreen implements Screen {
     public void render(float delta) {
         player.update(delta, platforms.getPlatforms());
         walls.update();
+        cam.update();
         Gdx.gl.glClearColor(Constants.BACKGROUND_COLOR.r, Constants.BACKGROUND_COLOR.g, Constants.BACKGROUND_COLOR.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
-        view.apply(true);
-        sb.setProjectionMatrix(view.getCamera().combined);
-        sr.setProjectionMatrix(view.getCamera().combined);
+        view.apply();
+        sb.setProjectionMatrix(cam.getCam().combined);
+        sr.setProjectionMatrix(cam.getCam().combined);
 
         sb.begin();
         sb.draw(background, 0, 0);
@@ -63,7 +68,6 @@ public class GameScreen implements Screen {
         sb.begin();
         player.render(sb);
         sb.end();
-
 
 
     }

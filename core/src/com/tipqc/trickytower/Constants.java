@@ -9,6 +9,8 @@ import com.badlogic.gdx.graphics.Color;
 public class Constants {
     public static final int WIDTH = 480;
     public static final int HEIGHT = 800;
+//    public static final int WIDTH = 600;
+//    public static final int HEIGHT = 800;
     public static final String TITLE = "Tricky Towers";
 
     public static final Color BACKGROUND_COLOR = Color.BLUE;

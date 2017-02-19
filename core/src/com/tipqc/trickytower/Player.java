@@ -15,7 +15,7 @@ import com.tipqc.trickytower.Enums.JumpState;
 
 public class Player {
     private Texture texture;
-    private Vector2 position;
+    public Vector2 position;
     private Vector2 lastFramePosition;
     private Vector2 velocity;
     private Platform currentPlatform;
@@ -32,22 +32,23 @@ public class Player {
     public void handleInput(float delta) {
         float xAccel = Gdx.input.getAccelerometerX();
 
-        if(Gdx.input.isKeyPressed(Keys.J) || xAccel < 0) {
+        if(Gdx.input.isKeyPressed(Keys.J) || xAccel > 1) {
             position.add(-Constants.PLAYER_MOVEMENT_SPEED, 0);
-        } else if(Gdx.input.isKeyPressed(Keys.L) || xAccel > 0) {
+        } else if(Gdx.input.isKeyPressed(Keys.L) || xAccel < -1) {
             position.add(Constants.PLAYER_MOVEMENT_SPEED, 0);
         }
 
-        if(Gdx.input.isKeyJustPressed(Keys.I)) {
+        if(Gdx.input.isKeyJustPressed(Keys.I) || Gdx.input.justTouched()) {
             jump();
         }
     }
 
     public void update(float delta, Array<Platform> plats) {
+        //TODO: modify when to fall
         if(currentPlatform == null)
             currentPlatform = plats.get(0);
-        if(position.x+texture.getWidth()/2 < currentPlatform.getPosition().x ||
-                position.x+texture.getWidth()/2 > currentPlatform.getPosition().x+ currentPlatform.getWidth()) {
+        if(position.x+texture.getWidth() < currentPlatform.getPosition().x ||
+                position.x > currentPlatform.getPosition().x+ currentPlatform.getWidth()) {
             jumpState = JumpState.FALLING;
         }
 
