@@ -49,17 +49,22 @@ public class GameScreen implements Screen {
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         view.apply(true);
         sb.setProjectionMatrix(view.getCamera().combined);
+        sr.setProjectionMatrix(view.getCamera().combined);
 
         sb.begin();
         sb.draw(background, 0, 0);
         walls.render(sb);
-        player.render(sb);
         sb.end();
 
-        sr.setProjectionMatrix(view.getCamera().combined);
         sr.begin(ShapeRenderer.ShapeType.Filled);
         platforms.render(sr);
         sr.end();
+
+        sb.begin();
+        player.render(sb);
+        sb.end();
+
+
 
     }
 

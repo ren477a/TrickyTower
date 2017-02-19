@@ -18,6 +18,7 @@ public class Player {
     private Vector2 position;
     private Vector2 lastFramePosition;
     private Vector2 velocity;
+    private Platform currentPlatform;
     private JumpState jumpState;
 
 
@@ -41,27 +42,35 @@ public class Player {
     }
 
     public void update(float delta, Array<Platform> plats) {
+        if(currentPlatform == null)
+            currentPlatform = plats.get(0);
+        if(position.x+texture.getWidth()/2 < currentPlatform.getPosition().x ||
+                position.x+texture.getWidth()/2 > currentPlatform.getPosition().x+ currentPlatform.getWidth()) {
+            jumpState = JumpState.FALLING;
+        }
+
+
         lastFramePosition.set(position);
         handleInput(delta);
 
-
         //gravity
-        if(position.y > 0 && jumpState != JumpState.GROUNDED)
+        if(jumpState != JumpState.GROUNDED)
             velocity.add(0, Constants.GRAVITY);
         velocity.scl(delta);
         position.add(0, velocity.y);
         //stop falling on floor
-        if(position.y < Constants.PLATFORM_HEIGHT) {
-            position.y = Constants.PLATFORM_HEIGHT;
-            velocity.y = 0;
-            jumpState = JumpState.GROUNDED;
-        }
+//        if(position.y < Constants.PLATFORM_HEIGHT) {
+//            position.y = Constants.PLATFORM_HEIGHT;
+//            velocity.y = 0;
+//            jumpState = JumpState.GROUNDED;
+//        }
 
         if(velocity.y < 0)
             jumpState = JumpState.FALLING;
 
         for (int i = 0; i < plats.size; i++) {
-            landedOnPlatform(plats.get(i));
+            if(landedOnPlatform(plats.get(i)))
+                currentPlatform = plats.get(i);
         }
 
         ensureBounds();
@@ -74,13 +83,15 @@ public class Player {
 
     public boolean landedOnPlatform(Platform platform) {
         float platformLevel = platform.getPosition().y+Constants.PLATFORM_HEIGHT;
+        float playerCenter = position.x + texture.getWidth()/2;
         if(jumpState == JumpState.FALLING && lastFramePosition.y > platformLevel && position.y < platformLevel
-                && position.x > platform.getPosition().x && position.x < platform.getPosition().x + platform.getWidth()) {
+                && playerCenter > platform.getPosition().x && playerCenter < platform.getPosition().x + platform.getWidth()) {
             position.y = platformLevel;
             velocity.y = 0;
             jumpState = JumpState.GROUNDED;
+            return true;
         }
-        return true;
+        return false;
     }
 
     public void ensureBounds() {
