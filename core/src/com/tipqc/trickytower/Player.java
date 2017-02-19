@@ -30,9 +30,11 @@ public class Player {
     }
 
     public void handleInput(float delta) {
-        if(Gdx.input.isKeyPressed(Keys.J)) {
+        float xAccel = Gdx.input.getAccelerometerX();
+
+        if(Gdx.input.isKeyPressed(Keys.J) || xAccel < 0) {
             position.add(-Constants.PLAYER_MOVEMENT_SPEED, 0);
-        } else if(Gdx.input.isKeyPressed(Keys.L)) {
+        } else if(Gdx.input.isKeyPressed(Keys.L) || xAccel > 0) {
             position.add(Constants.PLAYER_MOVEMENT_SPEED, 0);
         }
 
