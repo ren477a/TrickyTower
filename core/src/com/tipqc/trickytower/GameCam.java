@@ -24,7 +24,6 @@ public class GameCam {
             highestReached = target.position.y;
             cam.position.y = highestReached;
         }
-        cam.position.y = target.position.y;
 
         cam.update();
     }
