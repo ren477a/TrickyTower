@@ -2,7 +2,6 @@ package com.tipqc.trickytower;
 
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
-import com.badlogic.gdx.graphics.Color;
 
 /**
  * Created by REN on 2/15/2017.
@@ -23,7 +22,19 @@ public class Platform {
     }
 
     public void render(ShapeRenderer renderer) {
-        renderer.setColor(Color.BLACK);
+        renderer.setColor(Constants.PLATFORM_COLOR);
         renderer.rect(position.x, position.y, width, Constants.PLATFORM_HEIGHT);
+    }
+
+    public float getWidth() {
+        return width;
+    }
+
+    public Vector2 getPosition() {
+        return position;
+    }
+
+    public void dispose() {
+
     }
 }

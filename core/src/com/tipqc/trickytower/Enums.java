@@ -7,6 +7,7 @@ package com.tipqc.trickytower;
 public class Enums {
     enum JumpState {
         GROUNDED,
-        AERIAL
+        JUMPING,
+        FALLING
     }
 }

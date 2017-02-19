@@ -5,6 +5,7 @@ import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
+import com.badlogic.gdx.utils.Array;
 import com.tipqc.trickytower.Enums.JumpState;
 
 
@@ -15,6 +16,7 @@ import com.tipqc.trickytower.Enums.JumpState;
 public class Player {
     private Texture texture;
     private Vector2 position;
+    private Vector2 lastFramePosition;
     private Vector2 velocity;
     private JumpState jumpState;
 
@@ -22,11 +24,11 @@ public class Player {
     public Player(int x, int y) {
         texture = new Texture("player.png");
         position = new Vector2(x, y);
+        lastFramePosition = new Vector2(position);
         velocity = new Vector2(0, 0);
     }
 
-    public void update(float delta) {
-
+    public void handleInput(float delta) {
         if(Gdx.input.isKeyPressed(Keys.J)) {
             position.add(-Constants.PLAYER_MOVEMENT_SPEED, 0);
         } else if(Gdx.input.isKeyPressed(Keys.L)) {
@@ -36,23 +38,49 @@ public class Player {
         if(Gdx.input.isKeyJustPressed(Keys.I)) {
             jump();
         }
+    }
+
+    public void update(float delta, Array<Platform> plats) {
+        lastFramePosition.set(position);
+        handleInput(delta);
+
 
         //gravity
-        if(position.y > 0)
+        if(position.y > 0 && jumpState != JumpState.GROUNDED)
             velocity.add(0, Constants.GRAVITY);
         velocity.scl(delta);
         position.add(0, velocity.y);
-
         //stop falling on floor
         if(position.y < Constants.PLATFORM_HEIGHT) {
             position.y = Constants.PLATFORM_HEIGHT;
+            velocity.y = 0;
             jumpState = JumpState.GROUNDED;
+        }
+
+        if(velocity.y < 0)
+            jumpState = JumpState.FALLING;
+
+        for (int i = 0; i < plats.size; i++) {
+            landedOnPlatform(plats.get(i));
         }
 
         ensureBounds();
 
         velocity.scl(1/delta);
 
+        System.out.println("Player is " + velocity.y);
+
+    }
+
+    public boolean landedOnPlatform(Platform platform) {
+        float platformLevel = platform.getPosition().y+Constants.PLATFORM_HEIGHT;
+        if(jumpState == JumpState.FALLING && lastFramePosition.y > platformLevel && position.y < platformLevel
+                && position.x > platform.getPosition().x && position.x < platform.getPosition().x + platform.getWidth()) {
+            position.y = platformLevel;
+            velocity.y = 0;
+            jumpState = JumpState.GROUNDED;
+        }
+        return true;
     }
 
     public void ensureBounds() {
@@ -65,7 +93,7 @@ public class Player {
     public void jump() {
         if(jumpState == JumpState.GROUNDED) {
             velocity.y = Constants.JUMP_VELOCITY;
-            jumpState = JumpState.AERIAL;
+            jumpState = JumpState.JUMPING;
         }
     }
 

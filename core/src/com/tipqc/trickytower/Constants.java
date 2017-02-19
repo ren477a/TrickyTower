@@ -16,10 +16,12 @@ public class Constants {
 
 
     public static final float GRAVITY = -50;
-    public static final float PLAYER_MOVEMENT_SPEED = 5.0f;
+    public static final float PLAYER_MOVEMENT_SPEED = 7.0f;
     public static final float JUMP_VELOCITY = 1000;
     public static final float LEFT_BOUNDARY = 25;
     public static final float RIGHT_BOUNDARY = 455;
 
     public static final float PLATFORM_HEIGHT = 20;
+    public static final int PLATFORM_DISTANCE = 150;
+    public static final Color PLATFORM_COLOR = Color.LIGHT_GRAY;
 }

@@ -43,7 +43,7 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        player.update(delta);
+        player.update(delta, platforms.getPlatforms());
         walls.update();
         Gdx.gl.glClearColor(Constants.BACKGROUND_COLOR.r, Constants.BACKGROUND_COLOR.g, Constants.BACKGROUND_COLOR.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
