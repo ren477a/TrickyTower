@@ -16,7 +16,7 @@ public class Constants {
 
 
     public static final float GRAVITY = -50;
-    public static final float PLAYER_MOVEMENT_SPEED = 7.0f;
+    public static final float PLAYER_MOVEMENT_SPEED = 4.0f;
     public static final float JUMP_VELOCITY = 1000;
     public static final float LEFT_BOUNDARY = 25;
     public static final float RIGHT_BOUNDARY = 455;

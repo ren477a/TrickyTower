@@ -58,12 +58,6 @@ public class Player {
             velocity.add(0, Constants.GRAVITY);
         velocity.scl(delta);
         position.add(0, velocity.y);
-        //stop falling on floor
-//        if(position.y < Constants.PLATFORM_HEIGHT) {
-//            position.y = Constants.PLATFORM_HEIGHT;
-//            velocity.y = 0;
-//            jumpState = JumpState.GROUNDED;
-//        }
 
         if(velocity.y < 0)
             jumpState = JumpState.FALLING;
@@ -76,8 +70,6 @@ public class Player {
         ensureBounds();
 
         velocity.scl(1/delta);
-
-        System.out.println("Player is " + velocity.y);
 
     }
 
