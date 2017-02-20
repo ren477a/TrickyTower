@@ -13,7 +13,7 @@ public class Constants {
 //    public static final int HEIGHT = 800;
     public static final String TITLE = "Tricky Towers";
 
-    public static final Color BACKGROUND_COLOR = Color.BLUE;
+    public static final Color BACKGROUND_COLOR = Color.GRAY;
     public static final float WORLD_SIZE = 10.0f;
 
 

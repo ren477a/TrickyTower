@@ -8,7 +8,7 @@ import com.badlogic.gdx.math.Vector2;
  */
 
 public class Platform {
-    private Vector2 position;
+    public Vector2 position;
     private float width;
 
     public Platform(float x, float y, float width) {
@@ -30,11 +30,5 @@ public class Platform {
         return width;
     }
 
-    public Vector2 getPosition() {
-        return position;
-    }
 
-    public void dispose() {
-
-    }
 }

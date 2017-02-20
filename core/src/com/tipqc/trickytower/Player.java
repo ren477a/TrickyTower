@@ -47,8 +47,8 @@ public class Player {
         //TODO: modify when to fall
         if(currentPlatform == null)
             currentPlatform = plats.get(0);
-        if(position.x+texture.getWidth() < currentPlatform.getPosition().x ||
-                position.x > currentPlatform.getPosition().x+ currentPlatform.getWidth()) {
+        if(position.x+texture.getWidth() < currentPlatform.position.x ||
+                position.x > currentPlatform.position.x+ currentPlatform.getWidth()) {
             jumpState = JumpState.FALLING;
         }
 
@@ -77,10 +77,10 @@ public class Player {
     }
 
     public boolean landedOnPlatform(Platform platform) {
-        float platformLevel = platform.getPosition().y+Constants.PLATFORM_HEIGHT;
+        float platformLevel = platform.position.y+Constants.PLATFORM_HEIGHT;
         float playerCenter = position.x + texture.getWidth()/2;
         if(jumpState == JumpState.FALLING && lastFramePosition.y > platformLevel && position.y < platformLevel
-                && playerCenter > platform.getPosition().x && playerCenter < platform.getPosition().x + platform.getWidth()) {
+                && playerCenter > platform.position.x && playerCenter < platform.position.x + platform.getWidth()) {
             position.y = platformLevel;
             velocity.y = 0;
             jumpState = JumpState.GROUNDED;

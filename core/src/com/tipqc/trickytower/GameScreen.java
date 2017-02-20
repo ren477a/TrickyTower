@@ -50,6 +50,7 @@ public class GameScreen implements Screen {
         player.update(delta, platforms.getPlatforms());
         walls.update();
         cam.update();
+        platforms.update(cam.getCam());
         Gdx.gl.glClearColor(Constants.BACKGROUND_COLOR.r, Constants.BACKGROUND_COLOR.g, Constants.BACKGROUND_COLOR.b, 1);
         Gdx.gl.glClear(GL20.GL_COLOR_BUFFER_BIT);
         view.apply();
@@ -57,7 +58,7 @@ public class GameScreen implements Screen {
         sr.setProjectionMatrix(cam.getCam().combined);
 
         sb.begin();
-        sb.draw(background, 0, 0);
+        sb.draw(background, cam.getCam().position.x - Constants.WIDTH/2, cam.getCam().position.y - Constants.HEIGHT/2);
         walls.render(sb);
         sb.end();
 

@@ -1,5 +1,6 @@
 package com.tipqc.trickytower;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.utils.Array;
 
@@ -26,10 +27,15 @@ public class Platforms {
             float width = 50 + r.nextFloat()*100;
             float position = Constants.LEFT_BOUNDARY +
                     r.nextFloat()*(Constants.RIGHT_BOUNDARY - width - Constants.LEFT_BOUNDARY);
+            plats.add(new Platform(position, plats.get(i-1).position.y + yDistance, width));
+        }
+    }
 
-
-
-            plats.add(new Platform(position, plats.get(i-1).getPosition().y + yDistance, width));
+    public void update(Camera cam) {
+        for (int i = 0; i < plats.size; i++) {
+            if(plats.get(i).position.y < cam.position.y - Constants.HEIGHT/2) {
+                plats.get(i).position.y = (plats.get((i+9)%10).position.y) + (75 + r.nextFloat()*75);
+            }
         }
     }
 
@@ -38,6 +44,10 @@ public class Platforms {
         for (int i = 0; i < plats.size; i++) {
             plats.get(i).render(sr);
         }
+    }
+
+    public void reposition(Platform platform) {
+
     }
 
     public Array<Platform> getPlatforms() {
