@@ -1,5 +1,6 @@
 package com.tipqc.trickytower;
 
+import com.badlogic.gdx.graphics.Camera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.math.Vector2;
@@ -21,8 +22,15 @@ public class Walls {
 
     }
 
-    public void update() {
-
+    public void update(Camera cam) {
+        if(leftWall1.y + Constants.HEIGHT < cam.position.y - Constants.HEIGHT/2)
+            leftWall1.y += Constants.HEIGHT*2;
+        if(rightWall1.y + Constants.HEIGHT < cam.position.y - Constants.HEIGHT/2)
+            rightWall1.y += Constants.HEIGHT*2;
+        if(leftWall2.y + Constants.HEIGHT < cam.position.y - Constants.HEIGHT/2)
+            leftWall2.y += Constants.HEIGHT*2;
+        if(rightWall2.y + Constants.HEIGHT < cam.position.y - Constants.HEIGHT/2)
+            rightWall2.y += Constants.HEIGHT*2;
     }
 
     public void render(SpriteBatch sb) {
