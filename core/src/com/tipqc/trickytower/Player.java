@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.tipqc.trickytower.Enums.JumpState;
@@ -20,6 +21,7 @@ public class Player {
     private Vector2 velocity;
     private Platform currentPlatform;
     private JumpState jumpState;
+    private Rectangle rect;
 
 
     public Player(int x, int y) {
@@ -27,6 +29,7 @@ public class Player {
         position = new Vector2(x, y);
         lastFramePosition = new Vector2(position);
         velocity = new Vector2(0, 0);
+        rect = new Rectangle(position.x, position.y, texture.getWidth(), texture.getHeight());
     }
 
     public void handleInput(float delta) {
@@ -43,7 +46,7 @@ public class Player {
         }
     }
 
-    public void update(float delta, Array<Platform> plats) {
+    public void update(float delta, Array<Platform> plats, Rectangle killPlane) {
         //TODO: modify when to fall
         if(currentPlatform == null)
             currentPlatform = plats.get(0);
@@ -71,9 +74,13 @@ public class Player {
         }
 
         ensureBounds();
-
         velocity.scl(1/delta);
 
+        rect.setPosition(position.x, position.y);
+        if(collision(killPlane)) {
+            System.out.println("Collides");
+            //TODO reset game
+        }
     }
 
     public boolean landedOnPlatform(Platform platform) {
@@ -87,6 +94,10 @@ public class Player {
             return true;
         }
         return false;
+    }
+
+    public boolean collision(Rectangle killPlane) {
+        return rect.overlaps(killPlane);
     }
 
     public void ensureBounds() {

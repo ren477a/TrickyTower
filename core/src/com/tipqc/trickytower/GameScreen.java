@@ -7,6 +7,7 @@ import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.utils.viewport.FitViewport;
 import com.badlogic.gdx.utils.viewport.Viewport;
 import com.badlogic.gdx.graphics.Texture;
@@ -28,7 +29,7 @@ public class GameScreen implements Screen {
     private Walls walls;
     private Platforms platforms;
     private GameCam cam;
-    //TODO: Make a game camera
+    private Rectangle killPlane;
 
     public GameScreen(TrickyTowerGame game) {
         this.game = game;
@@ -44,6 +45,7 @@ public class GameScreen implements Screen {
         cam = new GameCam(view.getCamera(), player);
         walls = new Walls();
         platforms = new Platforms();
+        killPlane = new Rectangle(0, -10, Constants.WIDTH, 5);
     }
 
     @Override
@@ -51,9 +53,9 @@ public class GameScreen implements Screen {
         if(Gdx.input.isKeyPressed(Input.Keys.W)) {
             cam.getCam().position.y+=3;
         }
+        killPlane.setPosition(0, cam.getCam().position.y - Constants.HEIGHT/2 - 50);
 
-
-        player.update(delta, platforms.getPlatforms());
+        player.update(delta, platforms.getPlatforms(), killPlane);
         walls.update(cam.getCam());
         cam.update();
         platforms.update(cam.getCam());
