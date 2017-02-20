@@ -77,10 +77,7 @@ public class Player {
         velocity.scl(1/delta);
 
         rect.setPosition(position.x, position.y);
-        if(collision(killPlane)) {
-            System.out.println("Collides");
-            //TODO reset game
-        }
+
     }
 
     public boolean landedOnPlatform(Platform platform) {

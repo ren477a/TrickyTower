@@ -9,7 +9,7 @@ import com.badlogic.gdx.math.Vector2;
 
 public class Platform {
     public Vector2 position;
-    private float width;
+    public float width;
 
     public Platform(float x, float y, float width) {
         position = new Vector2(x, y);

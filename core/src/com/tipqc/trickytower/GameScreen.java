@@ -54,7 +54,11 @@ public class GameScreen implements Screen {
             cam.getCam().position.y+=3;
         }
         killPlane.setPosition(0, cam.getCam().position.y - Constants.HEIGHT/2 - 50);
-
+        if(player.collision(killPlane)) {
+            System.out.println("Collides");
+            dispose();
+            game.setScreen(new GameScreen(game));
+        }
         player.update(delta, platforms.getPlatforms(), killPlane);
         walls.update(cam.getCam());
         cam.update();
