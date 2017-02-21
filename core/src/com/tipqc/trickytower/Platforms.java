@@ -25,8 +25,15 @@ public class Platforms {
         for(int i = 1; i < 10; i++) {
             float yDistance = 75 + r.nextFloat()*75;
             float width = Constants.PLATFORM_MINIMUM_WIDTH + r.nextFloat()*100;
-            float position = Constants.LEFT_BOUNDARY +
-                    r.nextFloat()*(Constants.RIGHT_BOUNDARY - width - Constants.LEFT_BOUNDARY);
+//            float position = Constants.LEFT_BOUNDARY +
+//                    r.nextFloat()*(Constants.RIGHT_BOUNDARY - width - Constants.LEFT_BOUNDARY);
+            float left = plats.get(i-1).position.x - width - Constants.PLATFORM_X_DISTANCE;
+            float right = plats.get(i-1).position.x + plats.get(i-1).width + Constants.PLATFORM_X_DISTANCE;
+            if(left < Constants.LEFT_BOUNDARY)
+                left = Constants.LEFT_BOUNDARY;
+            if(right + width > Constants.RIGHT_BOUNDARY)
+                right = Constants.RIGHT_BOUNDARY - width;
+            float position = left + r.nextFloat()*(right-left);
             plats.add(new Platform(position, plats.get(i-1).position.y + yDistance, width));
         }
     }
@@ -49,6 +56,15 @@ public class Platforms {
     public void reposition(Platform platform, Platform platform2) {
         platform.position.y = (platform2.position.y) + (75 + r.nextFloat()*75);
         platform.width = Constants.PLATFORM_MINIMUM_WIDTH + r.nextFloat()*100;
+        float left = platform2.position.x - platform.width - Constants.PLATFORM_X_DISTANCE;
+        float right = platform2.position.x + platform2.width + Constants.PLATFORM_X_DISTANCE;
+        if(left < Constants.LEFT_BOUNDARY)
+            left = Constants.LEFT_BOUNDARY;
+        if(right + platform.width > Constants.RIGHT_BOUNDARY)
+            right = Constants.RIGHT_BOUNDARY - platform.width;
+        platform.position.x = left + r.nextFloat()*(right-left);
+//        platform.position.x =  Constants.LEFT_BOUNDARY +
+//                r.nextFloat()*(Constants.RIGHT_BOUNDARY - platform.width - Constants.LEFT_BOUNDARY);
 
     }
 

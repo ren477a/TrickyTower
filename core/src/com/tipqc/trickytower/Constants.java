@@ -27,4 +27,5 @@ public class Constants {
     public static final int PLATFORM_DISTANCE = 150;
     public static final float PLATFORM_MINIMUM_WIDTH = 70;
     public static final Color PLATFORM_COLOR = Color.LIGHT_GRAY;
+    public static final float PLATFORM_X_DISTANCE = 100;
 }

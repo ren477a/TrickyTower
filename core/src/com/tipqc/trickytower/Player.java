@@ -4,6 +4,7 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.ConeShapeBuilder;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -25,7 +26,7 @@ public class Player {
 
 
     public Player(int x, int y) {
-        texture = new Texture("player.png");
+        texture = new Texture("player2.png");
         position = new Vector2(x, y);
         lastFramePosition = new Vector2(position);
         velocity = new Vector2(0, 0);
@@ -74,8 +75,8 @@ public class Player {
         }
 
         ensureBounds();
-        velocity.scl(1/delta);
 
+        velocity.scl(1/delta);
         rect.setPosition(position.x, position.y);
 
     }

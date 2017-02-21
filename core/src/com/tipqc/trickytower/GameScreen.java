@@ -41,7 +41,7 @@ public class GameScreen implements Screen {
         sb = new SpriteBatch();
         sr = new ShapeRenderer();
         background = new Texture("bg.png");
-        player = new Player(Constants.WIDTH/2, 100);
+        player = new Player(Constants.WIDTH/2, 50);
         cam = new GameCam(view.getCamera(), player);
         walls = new Walls();
         platforms = new Platforms();
@@ -50,14 +50,15 @@ public class GameScreen implements Screen {
 
     @Override
     public void render(float delta) {
-        if(Gdx.input.isKeyPressed(Input.Keys.W)) {
-            cam.getCam().position.y+=3;
-        }
+//        if(Gdx.input.isKeyPressed(Input.Keys.W)) {
+//            cam.getCam().position.y+=3;
+//        }
+
+        if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
+            newGame();
         killPlane.setPosition(0, cam.getCam().position.y - Constants.HEIGHT/2 - 50);
         if(player.collision(killPlane)) {
-            System.out.println("Collides");
-            dispose();
-            game.setScreen(new GameScreen(game));
+            newGame();
         }
         player.update(delta, platforms.getPlatforms(), killPlane);
         walls.update(cam.getCam());
@@ -83,6 +84,12 @@ public class GameScreen implements Screen {
         sb.end();
 
 
+    }
+
+    public void newGame() {
+        System.out.println("Collides");
+        dispose();
+        game.setScreen(new GameScreen(game));
     }
 
     @Override
