@@ -4,7 +4,6 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
-import com.badlogic.gdx.graphics.g3d.utils.shapebuilders.ConeShapeBuilder;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
@@ -47,7 +46,7 @@ public class Player {
         }
     }
 
-    public void update(float delta, Array<Platform> plats, Rectangle killPlane) {
+    public void update(float delta, Array<Platform> plats, Rectangle killPlane, HUD hud, float highestReached) {
         //TODO: modify when to fall
         if(currentPlatform == null)
             currentPlatform = plats.get(0);
@@ -70,8 +69,13 @@ public class Player {
             jumpState = JumpState.FALLING;
 
         for (int i = 0; i < plats.size; i++) {
-            if(landedOnPlatform(plats.get(i)))
+            if(landedOnPlatform(plats.get(i))) {
                 currentPlatform = plats.get(i);
+                if(!currentPlatform.stepped) {
+                    hud.score++;
+                    currentPlatform.stepped = true;
+                }
+            }
         }
 
         ensureBounds();

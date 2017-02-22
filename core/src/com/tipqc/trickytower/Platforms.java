@@ -63,6 +63,7 @@ public class Platforms {
         if(right + platform.width > Constants.RIGHT_BOUNDARY)
             right = Constants.RIGHT_BOUNDARY - platform.width;
         platform.position.x = left + r.nextFloat()*(right-left);
+        platform.stepped = false;
 //        platform.position.x =  Constants.LEFT_BOUNDARY +
 //                r.nextFloat()*(Constants.RIGHT_BOUNDARY - platform.width - Constants.LEFT_BOUNDARY);
 

@@ -30,6 +30,7 @@ public class GameScreen implements Screen {
     private Platforms platforms;
     private GameCam cam;
     private Rectangle killPlane;
+    private HUD hud;
 
     public GameScreen(TrickyTowerGame game) {
         this.game = game;
@@ -46,13 +47,11 @@ public class GameScreen implements Screen {
         walls = new Walls();
         platforms = new Platforms();
         killPlane = new Rectangle(0, -10, Constants.WIDTH, 5);
+        hud = new HUD();
     }
 
     @Override
     public void render(float delta) {
-//        if(Gdx.input.isKeyPressed(Input.Keys.W)) {
-//            cam.getCam().position.y+=3;
-//        }
 
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
             newGame();
@@ -60,7 +59,7 @@ public class GameScreen implements Screen {
         if(player.collision(killPlane)) {
             newGame();
         }
-        player.update(delta, platforms.getPlatforms(), killPlane);
+        player.update(delta, platforms.getPlatforms(), killPlane, hud, cam.highestReached);
         walls.update(cam.getCam());
         cam.update();
         platforms.update(cam.getCam());
@@ -81,8 +80,10 @@ public class GameScreen implements Screen {
 
         sb.begin();
         player.render(sb);
+        hud.render(sb);
         sb.end();
 
+        hud.update(cam.getCam());
 
     }
 

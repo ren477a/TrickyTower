@@ -9,7 +9,7 @@ import com.badlogic.gdx.graphics.Camera;
 public class GameCam {
     private Camera cam;
     private Player target;
-    private float highestReached;
+    public float highestReached;
 
     public GameCam(Camera cam, Player target) {
         this.cam = cam;

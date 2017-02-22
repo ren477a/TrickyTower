@@ -10,10 +10,12 @@ import com.badlogic.gdx.math.Vector2;
 public class Platform {
     public Vector2 position;
     public float width;
+    boolean stepped;
 
     public Platform(float x, float y, float width) {
         position = new Vector2(x, y);
         this.width = width;
+        stepped = false;
     }
 
 
