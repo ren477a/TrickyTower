@@ -10,4 +10,14 @@ public class Enums {
         JUMPING,
         FALLING
     }
+
+    enum WalkState {
+        WALKING,
+        IDLE
+    }
+
+    enum Facing {
+        LEFT,
+        RIGHT
+    }
 }

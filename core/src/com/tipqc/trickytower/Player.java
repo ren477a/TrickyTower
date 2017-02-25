@@ -4,10 +4,13 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.graphics.g2d.TextureRegion;
 import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 import com.tipqc.trickytower.Enums.JumpState;
+import com.tipqc.trickytower.Enums.WalkState;
+import com.tipqc.trickytower.Enums.Facing;
 
 
 /**
@@ -16,32 +19,41 @@ import com.tipqc.trickytower.Enums.JumpState;
 
 public class Player {
     private Texture texture;
+    private Array<TextureRegion> idle;
+    private TextureRegion jumping;
     public Vector2 position;
     private Vector2 lastFramePosition;
     private Vector2 velocity;
     private Platform currentPlatform;
     private JumpState jumpState;
+    private WalkState walkState;
+    private Facing facing;
     private Rectangle rect;
 
 
     public Player(int x, int y) {
-        texture = new Texture("player2.png");
+        texture = new Texture("playeranimation.png");
+        idle = new Array<TextureRegion>();
+        for(int i = 0; i < 4; i++) {
+            idle.add(new TextureRegion(texture, 60+i*60, 0, 38, 66));
+        }
+        jumping = new TextureRegion(texture, 60, 66, 60, 66);
         position = new Vector2(x, y);
         lastFramePosition = new Vector2(position);
         velocity = new Vector2(0, 0);
-        rect = new Rectangle(position.x, position.y, texture.getWidth(), texture.getHeight());
+        rect = new Rectangle(position.x, position.y, idle.get(0).getRegionWidth(), idle.get(0).getRegionHeight());
     }
 
     public void handleInput(float delta) {
         float xAccel = Gdx.input.getAccelerometerX();
 
-        if(Gdx.input.isKeyPressed(Keys.J) || xAccel > 1) {
+        if(Gdx.input.isKeyPressed(Keys.LEFT) || xAccel > 1) {
             position.add(-Constants.PLAYER_MOVEMENT_SPEED, 0);
-        } else if(Gdx.input.isKeyPressed(Keys.L) || xAccel < -1) {
+        } else if(Gdx.input.isKeyPressed(Keys.RIGHT) || xAccel < -1) {
             position.add(Constants.PLAYER_MOVEMENT_SPEED, 0);
         }
 
-        if(Gdx.input.isKeyJustPressed(Keys.I) || Gdx.input.justTouched()) {
+        if(Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.justTouched()) {
             jump();
         }
     }
@@ -50,7 +62,7 @@ public class Player {
         //TODO: modify when to fall
         if(currentPlatform == null)
             currentPlatform = plats.get(0);
-        if(position.x+texture.getWidth() < currentPlatform.position.x ||
+        if(position.x+idle.get(0).getRegionWidth() < currentPlatform.position.x ||
                 position.x > currentPlatform.position.x+ currentPlatform.getWidth()) {
             jumpState = JumpState.FALLING;
         }
@@ -87,7 +99,7 @@ public class Player {
 
     public boolean landedOnPlatform(Platform platform) {
         float platformLevel = platform.position.y+Constants.PLATFORM_HEIGHT;
-        float playerCenter = position.x + texture.getWidth()/2;
+        float playerCenter = position.x + idle.get(0).getRegionWidth()/2;
         if(jumpState == JumpState.FALLING && lastFramePosition.y > platformLevel && position.y < platformLevel
                 && playerCenter > platform.position.x && playerCenter < platform.position.x + platform.getWidth()) {
             position.y = platformLevel;
@@ -105,8 +117,8 @@ public class Player {
     public void ensureBounds() {
         if(position.x < Constants.LEFT_BOUNDARY)
             position.x = Constants.LEFT_BOUNDARY;
-        if(position.x + texture.getWidth() > Constants.RIGHT_BOUNDARY)
-            position.x = Constants.RIGHT_BOUNDARY - texture.getWidth();
+        if(position.x + idle.get(0).getRegionWidth() > Constants.RIGHT_BOUNDARY)
+            position.x = Constants.RIGHT_BOUNDARY - idle.get(0).getRegionWidth();
     }
 
     public void jump() {
@@ -117,7 +129,10 @@ public class Player {
     }
 
     public void render(SpriteBatch sb) {
-        sb.draw(texture, position.x, position.y);
+        if(jumpState == JumpState.FALLING || jumpState == JumpState.JUMPING)
+            sb.draw(jumping, position.x, position.y);
+        else
+            sb.draw(idle.get(0), position.x, position.y);
     }
 
     public void dispose() {
