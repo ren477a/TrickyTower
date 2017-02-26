@@ -13,6 +13,7 @@ import com.tipqc.trickytower.Enums.WalkState;
 import com.tipqc.trickytower.Enums.Facing;
 
 
+
 /**
  * Created by REN on 2/12/2017.
  */
@@ -90,9 +91,16 @@ public class Player {
 
     public void handleInput(float delta) {
         float xAccel = Gdx.input.getAccelerometerX();
+        System.out.println(xAccel);
+        if(Gdx.input.isKeyPressed(Keys.LEFT) || xAccel > 0.75) {
+            float speed = -Constants.PLAYER_MOVEMENT_SPEED;
+            if(xAccel>0.75) {
+                speed = -Constants.PLAYER_MOVEMENT_SPEED*(xAccel/3);
+                if(speed < -Constants.PLAYER_MOVEMENT_SPEED)
+                    speed = -Constants.PLAYER_MOVEMENT_SPEED;
+            }
 
-        if(Gdx.input.isKeyPressed(Keys.LEFT) || xAccel > 1) {
-            position.add(-Constants.PLAYER_MOVEMENT_SPEED, 0);
+            position.add(speed, 0);
             walkState = WalkState.WALKING;
             facing = Facing.LEFT;
             if(!jumping.isFlipX())
@@ -103,8 +111,15 @@ public class Player {
             }
             if(!walking.get(walkingFrame).isFlipX())
                 walking.get(walkingFrame).flip(true, false);
-        } else if(Gdx.input.isKeyPressed(Keys.RIGHT) || xAccel < -1) {
-            position.add(Constants.PLAYER_MOVEMENT_SPEED, 0);
+        } else if(Gdx.input.isKeyPressed(Keys.RIGHT) || xAccel < -0.75) {
+            float speed = Constants.PLAYER_MOVEMENT_SPEED;
+            if(xAccel<-0.75) {
+                speed = Constants.PLAYER_MOVEMENT_SPEED*(-xAccel/3);
+                if(speed > Constants.PLAYER_MOVEMENT_SPEED)
+                    speed = Constants.PLAYER_MOVEMENT_SPEED;
+            }
+
+            position.add(speed, 0);
             walkState = WalkState.WALKING;
             facing = Facing.RIGHT;
             if(jumping.isFlipX())
