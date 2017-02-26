@@ -47,7 +47,7 @@ public class GameScreen implements Screen {
         walls = new Walls();
         platforms = new Platforms();
         killPlane = new Rectangle(0, -10, Constants.WIDTH, 5);
-        hud = new HUD();
+        hud = new HUD(sb);
     }
 
     @Override
@@ -82,8 +82,9 @@ public class GameScreen implements Screen {
         player.render(sb);
         hud.render(sb);
         sb.end();
-
-        hud.update(cam.getCam());
+        hud.update(delta);
+        sb.setProjectionMatrix(hud.stage.getCamera().combined);
+        hud.stage.draw();
 
     }
 
