@@ -23,8 +23,11 @@ public class HUD {
     private Viewport view;
     public long score;
     private Label scoreLabel;
+    private Label yourScoreLabel;
+    private Label highScoreLabel;
+    private Label currentHighScoreLabel;
 
-    public HUD(SpriteBatch sb) {
+    public HUD(SpriteBatch sb, long currentHighScore) {
         font = new BitmapFont();
         font.getData().setScale(2);
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -34,14 +37,22 @@ public class HUD {
         Table table = new Table();
         table.top();
         table.setFillParent(true);
-        scoreLabel =new Label(String.format("%6d", score), new Label.LabelStyle(font, Color.WHITE));
+        scoreLabel =new Label("SCORE:", new Label.LabelStyle(font, Color.WHITE));
+        yourScoreLabel =new Label(String.format("%6d", score), new Label.LabelStyle(font, Color.WHITE));
+        highScoreLabel =new Label("HIGH SCORE:", new Label.LabelStyle(font, Color.WHITE));
+        currentHighScoreLabel =new Label(String.format("%6d", currentHighScore), new Label.LabelStyle(font, Color.WHITE));
+
         table.add(scoreLabel).expandX().padTop(10);
+        table.add(highScoreLabel).expandX().padTop(10);
+        table.row();
+        table.add(yourScoreLabel).expandX();
+        table.add(currentHighScoreLabel).expandX();
 
         stage.addActor(table);
     }
 
     public void update(float delta) {
-        scoreLabel.setText(String.format("%6d", score));
+        yourScoreLabel.setText(String.format("%6d", score));
     }
 
     public void render(SpriteBatch sb) {

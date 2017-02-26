@@ -2,6 +2,7 @@ package com.tipqc.trickytower;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
+import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -31,6 +32,8 @@ public class GameScreen implements Screen {
     private GameCam cam;
     private Rectangle killPlane;
     private HUD hud;
+    Preferences pref;
+    long currentHighScore;
 
     public GameScreen(TrickyTowerGame game) {
         this.game = game;
@@ -38,6 +41,8 @@ public class GameScreen implements Screen {
 
     @Override
     public void show() {
+        pref = Gdx.app.getPreferences("GameData");
+        currentHighScore = pref.getLong("highScore", 0);
         view = new FitViewport(Constants.WIDTH, Constants.HEIGHT);
         sb = new SpriteBatch();
         sr = new ShapeRenderer();
@@ -47,7 +52,7 @@ public class GameScreen implements Screen {
         walls = new Walls();
         platforms = new Platforms();
         killPlane = new Rectangle(0, -10, Constants.WIDTH, 5);
-        hud = new HUD(sb);
+        hud = new HUD(sb, currentHighScore);
     }
 
     @Override
@@ -89,7 +94,12 @@ public class GameScreen implements Screen {
     }
 
     public void newGame() {
-        System.out.println("Collides");
+        System.out.println("Game Over");
+        //game over
+        if(hud.score > currentHighScore) {
+            pref.putLong("highScore", hud.score);
+            pref.flush();
+        }
         dispose();
         game.setScreen(new GameScreen(game));
     }
