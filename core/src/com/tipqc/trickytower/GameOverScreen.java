@@ -27,7 +27,7 @@ public class GameOverScreen implements Screen {
         this.game = game;
         this.highScore = highScore;
         this.yourScore = yourScore;
-        color = new Color(255, 120, 0, 100);
+        color = new Color(255, 75, 0, 1);
     }
 
     @Override

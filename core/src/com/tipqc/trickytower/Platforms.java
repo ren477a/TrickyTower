@@ -21,28 +21,28 @@ public class Platforms {
     public Platforms() {
         r = new Random();
         plats = new Array<Platform>();
-        plats.add(new Platform(Constants.LEFT_BOUNDARY, 0, Constants.WIDTH-50));
+        plats.add(new Platform(Constants.LEFT_BOUNDARY, 0, Constants.WIDTH-50, false));
         for(int i = 1; i < 10; i++) {
             float yDistance = 75 + r.nextFloat()*75;
             float width = Constants.PLATFORM_MINIMUM_WIDTH + r.nextFloat()*100;
-//            float position = Constants.LEFT_BOUNDARY +
-//                    r.nextFloat()*(Constants.RIGHT_BOUNDARY - width - Constants.LEFT_BOUNDARY);
             float left = plats.get(i-1).position.x - width - Constants.PLATFORM_X_DISTANCE;
             float right = plats.get(i-1).position.x + plats.get(i-1).width + Constants.PLATFORM_X_DISTANCE;
+
             if(left < Constants.LEFT_BOUNDARY)
                 left = Constants.LEFT_BOUNDARY;
             if(right + width > Constants.RIGHT_BOUNDARY)
                 right = Constants.RIGHT_BOUNDARY - width;
             float position = left + r.nextFloat()*(right-left);
-            plats.add(new Platform(position, plats.get(i-1).position.y + yDistance, width));
+            plats.add(new Platform(position, plats.get(i-1).position.y + yDistance, width, false));
         }
     }
 
-    public void update(Camera cam) {
+    public void update(Camera cam, float delta, long score) {
         for (int i = 0; i < plats.size; i++) {
             if(plats.get(i).position.y < cam.position.y - Constants.HEIGHT/2) {
-                reposition(plats.get(i), plats.get((i+9)%10));
+                reposition(plats.get(i), plats.get((i+9)%10), score);
             }
+            plats.get(i).update(delta);
         }
     }
 
@@ -53,7 +53,8 @@ public class Platforms {
         }
     }
 
-    public void reposition(Platform platform, Platform platform2) {
+    public void reposition(Platform platform, Platform platform2, long score) {
+        platform.isMoving = false;
         platform.position.y = (platform2.position.y) + (75 + r.nextFloat()*75);
         platform.width = Constants.PLATFORM_MINIMUM_WIDTH + r.nextFloat()*100;
         float left = platform2.position.x - platform.width - Constants.PLATFORM_X_DISTANCE;
@@ -64,8 +65,38 @@ public class Platforms {
             right = Constants.RIGHT_BOUNDARY - platform.width;
         platform.position.x = left + r.nextFloat()*(right-left);
         platform.stepped = false;
-//        platform.position.x =  Constants.LEFT_BOUNDARY +
-//                r.nextFloat()*(Constants.RIGHT_BOUNDARY - platform.width - Constants.LEFT_BOUNDARY);
+        float rMoving = r.nextFloat();
+        if(score > 5) {
+            if(rMoving < 0.10) {
+                platform.isMoving = true;
+                platform.velocity.x = 100;
+            }
+        } else if (score > 150) {
+            if(rMoving < 0.20) {
+                platform.isMoving = true;
+                platform.velocity.x = 110;
+            }
+        } else if (score > 225) {
+            if(rMoving < 0.30) {
+                platform.isMoving = true;
+                platform.velocity.x = 130;
+            }
+        } else if (score > 300) {
+            if(rMoving < 0.40) {
+                platform.isMoving = true;
+                platform.velocity.x = 150;
+            }
+        } else if (score > 400) {
+            if(rMoving < 0.50) {
+                platform.isMoving = true;
+                platform.velocity.x = 200;
+            }
+        } else if (score > 500) {
+            if(rMoving < 0.60) {
+                platform.isMoving = true;
+                platform.velocity.x = 250;
+            }
+        }
 
     }
 
