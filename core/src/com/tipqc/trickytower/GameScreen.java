@@ -94,14 +94,13 @@ public class GameScreen implements Screen {
     }
 
     public void newGame() {
-        System.out.println("Game Over");
         //game over
         if(hud.score > currentHighScore) {
             pref.putLong("highScore", hud.score);
             pref.flush();
         }
         dispose();
-        game.setScreen(new GameScreen(game));
+        game.setScreen(new GameOverScreen(game, currentHighScore, hud.score));
     }
 
     @Override
