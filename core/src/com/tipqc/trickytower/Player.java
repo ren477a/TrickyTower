@@ -2,6 +2,7 @@ package com.tipqc.trickytower;
 
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input.Keys;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
@@ -37,9 +38,10 @@ public class Player {
     private WalkState walkState;
     private Facing facing;
     private Rectangle rect;
-
+    Sound landingSound;
 
     public Player(int x, int y) {
+        landingSound = Gdx.audio.newSound(Gdx.files.internal("jumpland.wav"));
         texture = new Texture("playeranimation.png");
         idle = new Array<TextureRegion>();
         for(int i = 0; i < 4; i++) {
@@ -183,6 +185,7 @@ public class Player {
             position.y = platformLevel;
             velocity.y = 0;
             jumpState = JumpState.GROUNDED;
+            landingSound.play(1.0f);
             return true;
         }
         return false;
@@ -217,6 +220,7 @@ public class Player {
 
     public void dispose() {
         texture.dispose();
+        landingSound.dispose();
     }
 
 }
