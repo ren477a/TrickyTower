@@ -91,7 +91,6 @@ public class Player {
 
     public void handleInput(float delta) {
         float xAccel = Gdx.input.getAccelerometerX();
-        System.out.println(xAccel);
         if(Gdx.input.isKeyPressed(Keys.LEFT) || xAccel > 0.75) {
             float speed = -Constants.PLAYER_MOVEMENT_SPEED;
             if(xAccel>0.75) {
@@ -148,12 +147,12 @@ public class Player {
 
         lastFramePosition.set(position);
         handleInput(delta);
-
         //gravity
         if(jumpState != JumpState.GROUNDED)
             velocity.add(0, Constants.GRAVITY);
+        velocity.x = currentPlatform.velocity.x;
         velocity.scl(delta);
-        position.add(0, velocity.y);
+        position.add(velocity.x, velocity.y);
 
         if(velocity.y < 0)
             jumpState = JumpState.FALLING;

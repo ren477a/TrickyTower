@@ -21,9 +21,7 @@ public class Platform {
         this.width = width;
         stepped = false;
         this.isMoving = isMoving;
-        Random r = new Random();
-        float speed = 100 + r.nextFloat()*150;
-        velocity = new Vector2(speed, 0);
+        velocity = new Vector2(0, 0);
     }
 
 

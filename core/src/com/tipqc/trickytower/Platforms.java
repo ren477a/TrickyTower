@@ -66,32 +66,32 @@ public class Platforms {
         platform.position.x = left + r.nextFloat()*(right-left);
         platform.stepped = false;
         float rMoving = r.nextFloat();
-        if(score > 5) {
+        if(score > 32) {
             if(rMoving < 0.10) {
                 platform.isMoving = true;
                 platform.velocity.x = 100;
             }
-        } else if (score > 150) {
+        } else if (score > 64) {
             if(rMoving < 0.20) {
                 platform.isMoving = true;
                 platform.velocity.x = 110;
             }
-        } else if (score > 225) {
+        } else if (score > 128) {
             if(rMoving < 0.30) {
                 platform.isMoving = true;
-                platform.velocity.x = 130;
+                platform.velocity.x = 140;
             }
-        } else if (score > 300) {
+        } else if (score > 256) {
             if(rMoving < 0.40) {
                 platform.isMoving = true;
-                platform.velocity.x = 150;
+                platform.velocity.x = 180;
             }
-        } else if (score > 400) {
+        } else if (score > 512) {
             if(rMoving < 0.50) {
                 platform.isMoving = true;
                 platform.velocity.x = 200;
             }
-        } else if (score > 500) {
+        } else if (score > 1024) {
             if(rMoving < 0.60) {
                 platform.isMoving = true;
                 platform.velocity.x = 250;
