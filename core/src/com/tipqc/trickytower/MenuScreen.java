@@ -23,7 +23,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void show() {
-        background = new Texture("bg.png");
+        background = new Texture("menubg.png");
         sb = new SpriteBatch();
     }
 
