@@ -6,6 +6,8 @@ import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 /**
  * Created by REN on 2/13/2017.
@@ -16,6 +18,7 @@ public class MenuScreen implements Screen {
     private TrickyTowerGame game;
     private Texture background;
     private SpriteBatch sb;
+    private Viewport view;
 
     public MenuScreen(TrickyTowerGame game) {
         this.game = game;
@@ -23,6 +26,7 @@ public class MenuScreen implements Screen {
 
     @Override
     public void show() {
+        view = new FitViewport(Constants.WIDTH, Constants.HEIGHT);
         background = new Texture("menubg.png");
         sb = new SpriteBatch();
     }

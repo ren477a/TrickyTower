@@ -73,7 +73,7 @@ public class Platforms {
                 platform.isMoving = true;
                 platform.velocity.x = 100;
             }
-            if(rMoving > 0.90 && rMoving < 1.00) {
+            if(rMoving > 0.10 && rMoving < 1.00) {
                 platform.isKick = true;
             }
         } else if (score > 64) {
