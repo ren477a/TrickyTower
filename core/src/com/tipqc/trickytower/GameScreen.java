@@ -100,6 +100,7 @@ public class GameScreen implements Screen {
         if(hud.score > currentHighScore) {
             pref.putLong("highScore", hud.score);
             pref.flush();
+            currentHighScore = hud.score;
         }
         dispose();
         game.setScreen(new GameOverScreen(game, currentHighScore, hud.score));

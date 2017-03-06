@@ -93,7 +93,7 @@ public class Player {
 
     public void handleInput(float delta) {
         float xAccel = Gdx.input.getAccelerometerX();
-        if(Gdx.input.isKeyPressed(Keys.LEFT) || xAccel > 0.75) {
+        if(Gdx.input.isKeyPressed(Keys.J) || xAccel > 0.75) {
             float speed = -Constants.PLAYER_MOVEMENT_SPEED;
             if(xAccel>0.75) {
                 speed = -Constants.PLAYER_MOVEMENT_SPEED*(xAccel/3);
@@ -112,7 +112,7 @@ public class Player {
             }
             if(!walking.get(walkingFrame).isFlipX())
                 walking.get(walkingFrame).flip(true, false);
-        } else if(Gdx.input.isKeyPressed(Keys.RIGHT) || xAccel < -0.75) {
+        } else if(Gdx.input.isKeyPressed(Keys.L) || xAccel < -0.75) {
             float speed = Constants.PLAYER_MOVEMENT_SPEED;
             if(xAccel<-0.75) {
                 speed = Constants.PLAYER_MOVEMENT_SPEED*(-xAccel/3);
@@ -133,7 +133,7 @@ public class Player {
                 walking.get(walkingFrame).flip(true, false);
         }
 
-        if(Gdx.input.isKeyJustPressed(Keys.UP) || Gdx.input.justTouched()) {
+        if(Gdx.input.isKeyJustPressed(Keys.I) || Gdx.input.justTouched()) {
             jump();
         }
     }
@@ -152,7 +152,12 @@ public class Player {
         //gravity
         if(jumpState != JumpState.GROUNDED)
             velocity.add(0, Constants.GRAVITY);
-        velocity.x = currentPlatform.velocity.x;
+
+        //velocity.x = currentPlatform.velocity.x;
+        if(jumpState == JumpState.GROUNDED)
+            velocity.x = currentPlatform.velocity.x;
+        else
+            velocity.x = 0;
         velocity.scl(delta);
         position.add(velocity.x, velocity.y);
 
