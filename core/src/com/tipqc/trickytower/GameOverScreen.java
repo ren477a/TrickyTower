@@ -4,9 +4,12 @@ import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Screen;
 import com.badlogic.gdx.graphics.Color;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.BitmapFont;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.utils.viewport.FitViewport;
+import com.badlogic.gdx.utils.viewport.Viewport;
 
 
 /**
@@ -22,6 +25,7 @@ public class GameOverScreen implements Screen {
     private long highScore;
     private long yourScore;
     private Color color;
+    private Viewport view;
 
     public GameOverScreen(TrickyTowerGame game, long highScore, long yourScore) {
         this.game = game;
@@ -34,6 +38,9 @@ public class GameOverScreen implements Screen {
     public void show() {
         background = new Texture("gameover.png");
         sb = new SpriteBatch();
+        view = new FitViewport(Constants.WIDTH, Constants.HEIGHT, new OrthographicCamera());
+        view.getCamera().position.x = Constants.WIDTH/2;
+        view.getCamera().position.y = Constants.HEIGHT/2;
         font = new BitmapFont();
         font.getData().setScale(3);
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
@@ -46,6 +53,8 @@ public class GameOverScreen implements Screen {
         String y = Long.toString(highScore);
         float xoff = x.length() * 10;
         float yoff = y.length() * 10;
+        view.apply();
+        sb.setProjectionMatrix(view.getCamera().combined);
         sb.begin();
         sb.draw(background, 0, 0);
         font.draw(sb, x, 230-xoff, 420);
@@ -60,7 +69,7 @@ public class GameOverScreen implements Screen {
 
     @Override
     public void resize(int width, int height) {
-
+        view.update(width, height);
     }
 
     @Override
