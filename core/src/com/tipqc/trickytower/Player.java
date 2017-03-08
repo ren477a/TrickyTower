@@ -154,8 +154,9 @@ public class Player {
             velocity.add(0, Constants.GRAVITY);
 
         //velocity.x = currentPlatform.velocity.x;
-        if(jumpState == JumpState.GROUNDED)
+        if(jumpState == JumpState.GROUNDED) {
             velocity.x = currentPlatform.velocity.x;
+        }
         else
             velocity.x = 0;
         velocity.scl(delta);

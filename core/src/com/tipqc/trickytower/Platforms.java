@@ -57,6 +57,7 @@ public class Platforms {
     public void reposition(Platform platform, Platform platform2, long score) {
         platform.isMoving = false;
         platform.isKick = false;
+        platform.velocity.x = 0;
         platform.position.y = (platform2.position.y) + (75 + r.nextFloat()*75);
         platform.width = Constants.PLATFORM_MINIMUM_WIDTH + r.nextFloat()*100;
         float left = platform2.position.x - platform.width - Constants.PLATFORM_X_DISTANCE;
@@ -73,7 +74,7 @@ public class Platforms {
                 platform.isMoving = true;
                 platform.velocity.x = 100;
             }
-            if(rMoving > 0.10 && rMoving < 1.00) {
+            if(rMoving > 0.90 && rMoving < 1.00) {
                 platform.isKick = true;
             }
         } else if (score > 64) {
@@ -106,14 +107,6 @@ public class Platforms {
                 platform.velocity.x = 200;
             }
             if(rMoving > 0.50 && rMoving < 1.00) {
-                platform.isKick = true;
-            }
-        } else if (score > 1024) {
-            if(rMoving < 0.60) {
-                platform.isMoving = true;
-                platform.velocity.x = 250;
-            }
-            if(rMoving > 0.40 && rMoving < 1.00) {
                 platform.isKick = true;
             }
         }
