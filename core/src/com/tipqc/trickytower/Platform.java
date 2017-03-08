@@ -1,5 +1,6 @@
 package com.tipqc.trickytower;
 
+import com.badlogic.gdx.graphics.Color;
 import com.badlogic.gdx.graphics.glutils.ShapeRenderer;
 import com.badlogic.gdx.math.Vector2;
 
@@ -18,7 +19,7 @@ public class Platform {
     boolean isKick;
     float kickInterval;
     float currentTime;
-
+    public Color color;
     public Platform(float x, float y, float width, boolean isMoving, boolean isKick) {
         this.isKick = isKick;
         position = new Vector2(x, y);
@@ -28,6 +29,7 @@ public class Platform {
         this.isMoving = isMoving;
         velocity = new Vector2(0, 0);
         currentTime = 0;
+        color = new Color();
     }
 
 
@@ -75,9 +77,11 @@ public class Platform {
     }
 
     public void render(ShapeRenderer renderer) {
-        renderer.setColor(Constants.PLATFORM_COLOR);
+        renderer.setColor(color);
+        //renderer.setColor(Constants.PLATFORM_COLOR);
         renderer.rect(position.x, position.y, width, Constants.PLATFORM_HEIGHT);
     }
+
 
     public float getWidth() {
         return width;

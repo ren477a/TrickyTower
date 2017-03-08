@@ -23,6 +23,9 @@ public class Platforms {
         r = new Random();
         plats = new Array<Platform>();
         plats.add(new Platform(Constants.LEFT_BOUNDARY, 0, Constants.WIDTH-50, false, false));
+        plats.get(0).color.r = r.nextFloat()*255;
+        plats.get(0).color.g = r.nextFloat()*255;
+        plats.get(0).color.b = r.nextFloat()*255;
         for(int i = 1; i < 10; i++) {
             float yDistance = 75 + r.nextFloat()*75;
             float width = Constants.PLATFORM_MINIMUM_WIDTH + r.nextFloat()*100;
@@ -35,6 +38,9 @@ public class Platforms {
                 right = Constants.RIGHT_BOUNDARY - width;
             float position = left + r.nextFloat()*(right-left);
             plats.add(new Platform(position, plats.get(i-1).position.y + yDistance, width, false, false));
+            plats.get(i).color.r = r.nextFloat()*255;
+            plats.get(i).color.g = r.nextFloat()*255;
+            plats.get(i).color.b = r.nextFloat()*255;
         }
     }
 
@@ -55,6 +61,9 @@ public class Platforms {
     }
 
     public void reposition(Platform platform, Platform platform2, long score) {
+        platform.color.r = r.nextFloat()*255;
+        platform.color.g = r.nextFloat()*255;
+        platform.color.b = r.nextFloat()*255;
         platform.isMoving = false;
         platform.isKick = false;
         platform.velocity.x = 0;
