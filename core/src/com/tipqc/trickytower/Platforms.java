@@ -43,7 +43,7 @@ public class Platforms {
             plats.get(i).color.g = r.nextFloat()*255;
             plats.get(i).color.b = r.nextFloat()*255;
         }
-        monster = new Monster(plats.get(3));
+        monster = new Monster(plats.get(0));
     }
 
     public void update(Camera cam, float delta, long score) {

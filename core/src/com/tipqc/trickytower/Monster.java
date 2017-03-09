@@ -17,6 +17,7 @@ public class Monster {
     private Array<TextureRegion> idle;
     private Platform platform;
     public Rectangle colBox;
+    private float offset;
 
     public Monster(Platform platform) {
         this.platform = platform;
@@ -28,7 +29,8 @@ public class Monster {
         position.y = platform.position.y + Constants.PLATFORM_HEIGHT;
         velocity = new Vector2(platform.velocity.x, platform.velocity.y);
         velocity.x = 100 + platform.velocity.x;
-        colBox = new Rectangle(position.x, position.y, idle.get(0).getRegionWidth(), idle.get(0).getRegionHeight());
+        offset = 10f;
+        colBox = new Rectangle(position.x+offset, position.y, idle.get(0).getRegionWidth()-2*offset, idle.get(0).getRegionHeight()-2*offset);
     }
 
     public void update(float delta) {
@@ -36,7 +38,7 @@ public class Monster {
         velocity.scl(delta);
         position.add(velocity.x, velocity.y);
         velocity.scl(1/delta);
-        colBox.setPosition(position);
+        colBox.setPosition(position.x+offset, position.y);
     }
 
     public void ensureBounds() {
