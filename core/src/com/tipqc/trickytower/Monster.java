@@ -63,7 +63,7 @@ public class Monster {
     }
 
     public void hide() {
-        position.y = 0;
+        position.y = -100;
     }
 
     public void show() {

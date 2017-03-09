@@ -31,7 +31,7 @@ public class HUD {
         font = new BitmapFont();
         font.getData().setScale(2);
         font.getRegion().getTexture().setFilter(Texture.TextureFilter.Linear, Texture.TextureFilter.Linear);
-        score = -1;
+        score = 0;
         view = new FitViewport(Constants.WIDTH, Constants.HEIGHT, new OrthographicCamera());
         stage = new Stage(view, sb);
         Table table = new Table();

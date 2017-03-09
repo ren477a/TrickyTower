@@ -6,7 +6,6 @@ import com.badlogic.gdx.utils.Array;
 
 import java.util.Random;
 
-import static com.badlogic.gdx.utils.Align.left;
 
 
 /**
@@ -19,15 +18,18 @@ public class Platforms {
     private Array<Platform> plats;
     private Platform platform;
     private Random r;
+    public float monsterSpawnThreshold;
     Monster monster;
 
     public Platforms() {
+        monsterSpawnThreshold = 151;
         r = new Random();
         plats = new Array<Platform>();
         plats.add(new Platform(Constants.LEFT_BOUNDARY, 0, Constants.WIDTH-50, false, false));
         plats.get(0).color.r = r.nextFloat()*255;
         plats.get(0).color.g = r.nextFloat()*255;
         plats.get(0).color.b = r.nextFloat()*255;
+        plats.get(0).stepped = true;
         for(int i = 1; i < 10; i++) {
             float yDistance = 75 + r.nextFloat()*75;
             float width = Constants.PLATFORM_MINIMUM_WIDTH + r.nextFloat()*100;
@@ -45,7 +47,7 @@ public class Platforms {
             plats.get(i).color.b = r.nextFloat()*255;
         }
         monster = new Monster(plats.get(0));
-        monster.putAbove(plats.get(3));
+        monster.hide();
     }
 
     public void update(Camera cam, float delta, long score) {
@@ -74,8 +76,9 @@ public class Platforms {
         platform.velocity.x = 0;
         platform.position.y = (platform2.position.y) + (75 + r.nextFloat()*75);
         platform.width = Constants.PLATFORM_MINIMUM_WIDTH + r.nextFloat()*100;
-        if(monster.position.y< cam.position.y - Constants.HEIGHT/2) {
-            if(platform.width>100) {
+        //spawn monster if platform width is above the threshold
+        if(monster.position.y < cam.position.y - Constants.HEIGHT/2) {
+            if(platform.width > monsterSpawnThreshold) {
                 monster.putAbove(platform);
                 monster.show();
             } else {
@@ -93,6 +96,8 @@ public class Platforms {
         platform.stepped = false;
         float rMoving = r.nextFloat();
         if(score > 32) {
+            monsterSpawnThreshold = 130;
+            System.out.println(monsterSpawnThreshold);
             if(rMoving < 0.10) {
                 platform.isMoving = true;
                 platform.velocity.x = 100;
@@ -101,6 +106,7 @@ public class Platforms {
                 platform.isKick = true;
             }
         } else if (score > 64) {
+            monsterSpawnThreshold = 120;
             if(rMoving < 0.20) {
                 platform.isMoving = true;
                 platform.velocity.x = 110;
@@ -109,6 +115,7 @@ public class Platforms {
                 platform.isKick = true;
             }
         } else if (score > 128) {
+            monsterSpawnThreshold = 110;
             if(rMoving < 0.30) {
                 platform.isMoving = true;
                 platform.velocity.x = 140;
@@ -117,6 +124,7 @@ public class Platforms {
                 platform.isKick = true;
             }
         } else if (score > 256) {
+            monsterSpawnThreshold = 110;
             if(rMoving < 0.40) {
                 platform.isMoving = true;
                 platform.velocity.x = 180;
@@ -125,6 +133,7 @@ public class Platforms {
                 platform.isKick = true;
             }
         } else if (score > 512) {
+            monsterSpawnThreshold = 80;
             if(rMoving < 0.50) {
                 platform.isMoving = true;
                 platform.velocity.x = 200;
