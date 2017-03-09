@@ -1,5 +1,7 @@
 package com.tipqc.trickytower;
 
+import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.Input;
 import com.badlogic.gdx.graphics.Camera;
 
 /**
@@ -24,6 +26,9 @@ public class GameCam {
             highestReached = target.position.y;
             cam.position.y = highestReached;
         }
+        //debug
+        if(Gdx.input.isKeyPressed(Input.Keys.W))
+            cam.position.y+=2;
 
         cam.update();
     }

@@ -1,9 +1,11 @@
 package com.tipqc.trickytower;
 
+import com.badlogic.gdx.Audio;
 import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.Input;
 import com.badlogic.gdx.Preferences;
 import com.badlogic.gdx.Screen;
+import com.badlogic.gdx.audio.Music;
 import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.GL20;
 import com.badlogic.gdx.graphics.OrthographicCamera;
@@ -33,6 +35,7 @@ public class GameScreen implements Screen {
     private GameCam cam;
     private Rectangle killPlane;
     private HUD hud;
+    private Music music;
     Preferences pref;
     long currentHighScore;
 
@@ -44,6 +47,9 @@ public class GameScreen implements Screen {
     @Override
     public void show() {
         pref = Gdx.app.getPreferences("GameData");
+        music = Gdx.audio.newMusic(Gdx.files.internal("music.mp3"));
+        music.play();
+        music.setLooping(true);
         currentHighScore = pref.getLong("highScore", 0);
         view = new FitViewport(Constants.WIDTH, Constants.HEIGHT);
         sb = new SpriteBatch();
@@ -134,6 +140,7 @@ public class GameScreen implements Screen {
         platforms.dispose();
         background.dispose();
         sb.dispose();
+        music.dispose();
 
     }
 }
