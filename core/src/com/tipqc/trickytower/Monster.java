@@ -64,7 +64,7 @@ public class Monster {
                     idle.get(i).flip(true, false);
             }
         }
-    }
+    } 
 
     public void ensureBounds() {
         if(position.x < platform.position.x)
