@@ -63,7 +63,7 @@ public class GameScreen implements Screen {
         if(Gdx.input.isKeyJustPressed(Input.Keys.SPACE))
             newGame();
         killPlane.setPosition(0, cam.getCam().position.y - Constants.HEIGHT/2 - 50);
-        if(player.collision(killPlane)) {
+        if(player.collision(killPlane) || player.collision(platforms.monster.colBox)) {
             newGame();
         }
         player.update(delta, platforms.getPlatforms(), killPlane, hud, cam.highestReached);

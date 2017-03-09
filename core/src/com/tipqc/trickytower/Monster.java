@@ -3,6 +3,7 @@ package com.tipqc.trickytower;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.graphics.g2d.TextureRegion;
+import com.badlogic.gdx.math.Rectangle;
 import com.badlogic.gdx.math.Vector2;
 import com.badlogic.gdx.utils.Array;
 
@@ -15,6 +16,7 @@ public class Monster {
     private Vector2 position, velocity;
     private Array<TextureRegion> idle;
     private Platform platform;
+    public Rectangle colBox;
 
     public Monster(Platform platform) {
         this.platform = platform;
@@ -26,6 +28,7 @@ public class Monster {
         position.y = platform.position.y + Constants.PLATFORM_HEIGHT;
         velocity = new Vector2(platform.velocity.x, platform.velocity.y);
         velocity.x = 100 + platform.velocity.x;
+        colBox = new Rectangle(position.x, position.y, idle.get(0).getRegionWidth(), idle.get(0).getRegionHeight());
     }
 
     public void update(float delta) {
@@ -33,6 +36,7 @@ public class Monster {
         velocity.scl(delta);
         position.add(velocity.x, velocity.y);
         velocity.scl(1/delta);
+        colBox.setPosition(position);
     }
 
     public void ensureBounds() {
