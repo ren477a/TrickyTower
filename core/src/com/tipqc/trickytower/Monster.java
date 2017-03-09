@@ -18,12 +18,17 @@ public class Monster {
     private Platform platform;
     public Rectangle colBox;
     private float offset;
+    private int idleFrame;
+    private float idleCurrentTime;
+    private float idleMaxFrameTime;
 
     public Monster(Platform platform) {
         this.platform = platform;
         texture = new Texture("monster.png");
         idle = new Array<TextureRegion>();
         idle.add(new TextureRegion(texture, 0, 0, 32, 35));
+        idle.add(new TextureRegion(texture, 32, 0, 32, 35));
+        idleMaxFrameTime = 1.0f / idle.size;
         position = new Vector2();
         position.x = platform.position.x;
         position.y = platform.position.y + Constants.PLATFORM_HEIGHT;
@@ -39,6 +44,26 @@ public class Monster {
         position.add(velocity.x, velocity.y);
         velocity.scl(1/delta);
         colBox.setPosition(position.x+offset, position.y);
+
+        idleCurrentTime+=delta;
+        if(idleCurrentTime > idleMaxFrameTime) {
+            idleFrame++;
+            idleCurrentTime = 0;
+        }
+        if(idleFrame >= idle.size)
+            idleFrame = 0;
+
+        if(velocity.x > 0) {
+            for (int i = 0; i < idle.size; i++) {
+                if(!idle.get(i).isFlipX())
+                    idle.get(i).flip(true, false);
+            }
+        } else {
+            for(int i = 0; i < idle.size; i++) {
+                if(idle.get(i).isFlipX())
+                    idle.get(i).flip(true, false);
+            }
+        }
     }
 
     public void ensureBounds() {
@@ -49,7 +74,7 @@ public class Monster {
     }
 
     public void render(SpriteBatch sb) {
-        sb.draw(idle.get(0), position.x, position.y);
+        sb.draw(idle.get(idleFrame), position.x, position.y);
     }
 
     public void dispose() {
