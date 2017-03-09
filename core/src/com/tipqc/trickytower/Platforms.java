@@ -6,6 +6,7 @@ import com.badlogic.gdx.utils.Array;
 
 import java.util.Random;
 
+import static com.badlogic.gdx.utils.Align.left;
 
 
 /**
@@ -44,13 +45,14 @@ public class Platforms {
             plats.get(i).color.b = r.nextFloat()*255;
         }
         monster = new Monster(plats.get(0));
+        monster.putAbove(plats.get(3));
     }
 
     public void update(Camera cam, float delta, long score) {
         monster.update(delta);
         for (int i = 0; i < plats.size; i++) {
             if(plats.get(i).position.y < cam.position.y - Constants.HEIGHT/2) {
-                reposition(plats.get(i), plats.get((i+9)%10), score);
+                reposition(plats.get(i), plats.get((i+9)%10), score, cam);
             }
             plats.get(i).update(delta);
         }
@@ -63,7 +65,7 @@ public class Platforms {
         }
     }
 
-    public void reposition(Platform platform, Platform platform2, long score) {
+    public void reposition(Platform platform, Platform platform2, long score, Camera cam) {
         platform.color.r = r.nextFloat()*255;
         platform.color.g = r.nextFloat()*255;
         platform.color.b = r.nextFloat()*255;
@@ -72,6 +74,15 @@ public class Platforms {
         platform.velocity.x = 0;
         platform.position.y = (platform2.position.y) + (75 + r.nextFloat()*75);
         platform.width = Constants.PLATFORM_MINIMUM_WIDTH + r.nextFloat()*100;
+        if(monster.position.y< cam.position.y - Constants.HEIGHT/2) {
+            if(platform.width>100) {
+                monster.putAbove(platform);
+                monster.show();
+            } else {
+                monster.hide();
+            }
+        }
+
         float left = platform2.position.x - platform.width - Constants.PLATFORM_X_DISTANCE;
         float right = platform2.position.x + platform2.width + Constants.PLATFORM_X_DISTANCE;
         if(left < Constants.LEFT_BOUNDARY)

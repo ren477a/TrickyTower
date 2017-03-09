@@ -13,7 +13,7 @@ import com.badlogic.gdx.utils.Array;
 
 public class Monster {
     private Texture texture;
-    private Vector2 position, velocity;
+    public Vector2 position, velocity;
     private Array<TextureRegion> idle;
     private Platform platform;
     public Rectangle colBox;
@@ -54,5 +54,19 @@ public class Monster {
 
     public void dispose() {
         texture.dispose();
+    }
+
+    public void putAbove(Platform platform) {
+        this.platform = platform;
+        position.x = platform.position.x;
+        position.y = platform.position.y + Constants.PLATFORM_HEIGHT;
+    }
+
+    public void hide() {
+        position.y = 0;
+    }
+
+    public void show() {
+        position.y = platform.position.y + Constants.PLATFORM_HEIGHT;
     }
 }
