@@ -86,6 +86,7 @@ public class GameScreen implements Screen {
         sr.end();
 
         sb.begin();
+        platforms.monster.render(sb);
         player.render(sb);
         hud.render(sb);
         sb.end();

@@ -18,6 +18,7 @@ public class Platforms {
     private Array<Platform> plats;
     private Platform platform;
     private Random r;
+    Monster monster;
 
     public Platforms() {
         r = new Random();
@@ -42,9 +43,11 @@ public class Platforms {
             plats.get(i).color.g = r.nextFloat()*255;
             plats.get(i).color.b = r.nextFloat()*255;
         }
+        monster = new Monster(plats.get(3));
     }
 
     public void update(Camera cam, float delta, long score) {
+        monster.update(delta);
         for (int i = 0; i < plats.size; i++) {
             if(plats.get(i).position.y < cam.position.y - Constants.HEIGHT/2) {
                 reposition(plats.get(i), plats.get((i+9)%10), score);
@@ -128,6 +131,6 @@ public class Platforms {
 
 
     public void dispose() {
-
+        monster.dispose();
     }
 }
